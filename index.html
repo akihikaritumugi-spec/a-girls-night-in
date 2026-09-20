@@ -268,6 +268,9 @@
 </div>
 
 <script>
+  // ▼ GASを「ウェブアプリ」としてデプロイしたときに発行されたURLをここに入力してください
+  const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzl7C1vkunI6zHOfugBSij7x-06RcVyLjnapViyuK6n2tJeRyrDFXDT8b9IeVpbJeKdyQ/exec';
+
   document.getElementById('entryForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
@@ -301,25 +304,24 @@
     btn.disabled = true;
     btn.textContent = '送信中…';
 
-    google.script.run
-      .withSuccessHandler(function (res) {
-        if (res.success) {
-          document.getElementById('formScreen').style.display = 'none';
-          document.getElementById('doneScreen').style.display = 'block';
-        } else {
-          errorMsg.textContent = res.error || '送信に失敗しました。時間をおいてお試しください。';
-          errorMsg.style.display = 'block';
-          btn.disabled = false;
-          btn.textContent = 'この内容で申し込む';
-        }
+    // GASのウェブアプリは外部サイトからのfetchに対してCORSヘッダーを返さないため、
+    // no-corsモード＋text/plainで送信します（レスポンス内容は読み取れませんが、送信自体は届きます）。
+    fetch(GAS_WEB_APP_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ name: name, email: email, paymentMethod: paymentMethod, message: message })
+    })
+      .then(function () {
+        document.getElementById('formScreen').style.display = 'none';
+        document.getElementById('doneScreen').style.display = 'block';
       })
-      .withFailureHandler(function (err) {
-        errorMsg.textContent = '送信エラー：' + err.message;
+      .catch(function () {
+        errorMsg.textContent = '送信に失敗しました。お手数ですが、時間をおいて再度お試しください。';
         errorMsg.style.display = 'block';
         btn.disabled = false;
         btn.textContent = 'この内容で申し込む';
-      })
-      .submitForm({ name: name, email: email, paymentMethod: paymentMethod, message: message });
+      });
   });
 </script>
 </body>
