@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&family=Zen+Maru+Gothic:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink: #f6d6d9;
+      --pink-deep: #eab8c0;
+      --beige: #f6efe4;
+      --white: #ffffff;
+      --text: #6b5a56;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Zen Maru Gothic', sans-serif;
+      color: var(--text);
+      background: linear-gradient(160deg, var(--beige) 0%, var(--white) 45%, var(--pink) 100%);
+      display: flex;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 480px;
+      background: var(--white);
+      border-radius: 28px;
+      padding: 36px 28px 32px;
+      box-shadow: 0 12px 32px rgba(234, 184, 192, 0.35);
+      border: 2px solid var(--pink);
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--pink);
+      color: var(--text);
+      font-size: 12px;
+      padding: 4px 14px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+      letter-spacing: 0.05em;
+    }
+
+    h1 {
+      font-family: 'Klee One', cursive;
+      font-size: 24px;
+      line-height: 1.5;
+      margin: 0 0 10px;
+      color: #b96d78;
+    }
+
+    .lead {
+      font-size: 14px;
+      line-height: 1.8;
+      margin: 0 0 28px;
+      color: #8a7772;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      margin: 18px 0 6px;
+      color: #a06a70;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1.5px solid var(--pink);
+      background: var(--beige);
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus {
+      border-color: var(--pink-deep);
+      box-shadow: 0 0 0 3px rgba(234, 184, 192, 0.35);
+      background: var(--white);
+    }
+
+    .date-options {
+      display: flex;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .date-option {
+      flex: 1;
+    }
+
+    .date-option input {
+      display: none;
+    }
+
+    .date-option label {
+      margin: 0;
+      display: block;
+      text-align: center;
+      padding: 12px 8px;
+      border-radius: 14px;
+      border: 1.5px solid var(--pink);
+      background: var(--beige);
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .date-option input:checked + label {
+      background: var(--pink-deep);
+      color: #fff;
+      border-color: var(--pink-deep);
+    }
+
+    button {
+      width: 100%;
+      margin-top: 28px;
+      padding: 14px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--pink-deep), var(--pink));
+      color: #fff;
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(234, 184, 192, 0.5);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    button:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(234, 184, 192, 0.6); }
+    button:disabled { opacity: 0.6; cursor: default; transform: none; }
+
+    .msg {
+      margin-top: 16px;
+      font-size: 13px;
+      text-align: center;
+      min-height: 18px;
+    }
+    .msg.error { color: #c0555f; }
+    .msg.success { color: #a06a70; }
+
+    .thanks {
+      text-align: center;
+      padding: 20px 0;
+    }
+    .thanks .heart { font-size: 32px; margin-bottom: 8px; }
+    .thanks p { font-size: 14px; line-height: 1.8; color: #8a7772; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div id="formView">
+      <span class="badge">交流会 ご案内</span>
+      <h1>ヒーリングアートで<br>恋バナしようぜ交流会</h1>
+      <p class="lead">
+        今、恋をしている方も、恋愛やパートナーシップについて<br>
+        ゆっくり話したい方も。<br>
+        ヒーリングアートを通じて、心をふわっとほどく時間を<br>
+        一緒に過ごしませんか？
+      </p>
+
+      <form id="entryForm">
+        <label for="name">お名前</label>
+        <input type="text" id="name" name="name" placeholder="例）山田 花子" required>
+
+        <label for="email">メールアドレス</label>
+        <input type="email" id="email" name="email" placeholder="例）hanako@example.com" required>
+
+        <label>参加希望日</label>
+        <div class="date-options">
+          <div class="date-option">
+            <input type="radio" id="date910" name="date" value="9/10" required>
+            <label for="date910">9/10</label>
+          </div>
+          <div class="date-option">
+            <input type="radio" id="date911" name="date" value="9/11">
+            <label for="date911">9/11</label>
+          </div>
+        </div>
+
+        <button type="submit" id="submitBtn">申し込む</button>
+        <div class="msg" id="msg"></div>
+      </form>
+    </div>
+
+    <div id="thanksView" class="thanks" style="display:none;">
+      <div class="heart">🌸</div>
+      <h1 style="font-size:20px;">お申込みありがとうございます</h1>
+      <p>ご入力いただいたメールアドレスに<br>確認メールをお送りしました。<br>当日お会いできるのを楽しみにしています。</p>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('entryForm');
+    const msg = document.getElementById('msg');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      msg.textContent = '';
+      msg.className = 'msg';
+
+      const dateEl = form.querySelector('input[name="date"]:checked');
+      const data = {
+        name: document.getElementById('name').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        date: dateEl ? dateEl.value : ''
+      };
+
+      if (!data.name || !data.email || !data.date) {
+        msg.textContent = 'すべての項目を入力してください。';
+        msg.className = 'msg error';
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = '送信中…';
+
+      google.script.run
+        .withSuccessHandler(function () {
+          document.getElementById('formView').style.display = 'none';
+          document.getElementById('thanksView').style.display = 'block';
+        })
+        .withFailureHandler(function (err) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = '申し込む';
+          msg.textContent = 'エラーが発生しました：' + err.message;
+          msg.className = 'msg error';
+        })
+        .submitForm(data);
+    });
+  </script>
+</body>
+</html>
